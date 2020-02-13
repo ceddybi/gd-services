@@ -1,6 +1,6 @@
 import PDFDocument from 'pdfkit';
 import moment from 'moment';
-import { MyTradeNamespace } from '../../interfaces/MyTrade.interface';
+import { MyTradeNamespace } from '../interfaces/MyTrade.interface';
 
 const bushels = {
     'corn': 39.3680,
@@ -10,7 +10,7 @@ const bushels = {
     'canola': 44.0920,
 };
 
-export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject, me): Promise<Buffer> => {
+export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject): Promise<Buffer> => {
     const trade = tradeBody.offer;
 
     // use passed volume or offer.volume
@@ -46,10 +46,10 @@ export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject
     const deliveryMethod = trade.deliveryMethod.method === 'Delivery' ? 'Delivery' : 'Pickup';
     const doc = new PDFDocument();
 
-    doc.image('../../images/GanaraskaLogo.jpg', 70, 35, {
+    doc.image(__dirname+'/../images/ganaraska.jpg', 70, 35, {
         fit: [160, 160],
         align: 'center',
-        valign: 'top'
+        valign: 'top' as any
     });
 
     doc.font('Helvetica-Bold')

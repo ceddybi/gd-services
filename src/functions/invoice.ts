@@ -1,5 +1,5 @@
 import PDFDocument from 'pdfkit';
-import { MyTradeNamespace } from '../../interfaces/MyTrade.interface';
+import { MyTradeNamespace } from '../interfaces/MyTrade.interface';
 
 const GOVERNMENT_TAX = 0.13;
 const GD_FEE = 0;
@@ -53,16 +53,16 @@ export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Pr
     const seller = trade.offer.offerType.id === '46244fa5-84f7-4259-9a48-38c0495d9547' ? trade.user : trade.offer.user;
 
     const doc = new PDFDocument();
-    doc.image('../../images/logo.png', 470, 35, {
+    doc.image(__dirname+'/../images/logo.png', 470, 35, {
         fit: [50, 50],
         align: 'center',
-        valign: 'top'
+        valign: 'top' as any
     });
 
-    doc.image('../../images/GanaraskaLogo.jpg', 70, 35, {
+    doc.image(__dirname+'/../images/ganaraska.jpg', 70, 35, {
         fit: [120, 120],
         align: 'center',
-        valign: 'top'
+        valign: 'top' as any
     });
 
     doc.fillColor('black')
