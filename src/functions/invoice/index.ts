@@ -1,4 +1,5 @@
-const PDFDocument = require('pdfkit');
+import PDFDocument from 'pdfkit';
+import { MyTradeNamespace } from '../../interfaces/MyTrade.interface';
 
 const GOVERNMENT_TAX = 0.13;
 const GD_FEE = 0;
@@ -23,7 +24,7 @@ const conversion = (value, commodity, baseUnit,  targetUnit, price) => {
     }
 };
 
-const generateInvoicePDF = async (trade) => {
+export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject) => {
 
     const drying_fee = trade.deliveries.reduce((acc, curr) => acc + curr.dryingCost * curr.volume, 0);
     const discount = trade.deliveries.reduce((acc, curr) => acc + curr.discount * curr.volume, 0);
@@ -32,11 +33,16 @@ const generateInvoicePDF = async (trade) => {
     const total_checkoff_tax = checkoff_fee * GOVERNMENT_TAX;
     const volume = trade.deliveries.reduce((acc, curr) => acc + curr.volume, 0);
 
-    trade.deliveries.forEach((delivery) => {
+    trade.deliveries = trade.deliveries.map((delivery) => {
         delivery.price = trade.offer.price - (delivery.dryingCost + delivery.discount + delivery.checkoffCost);
-        delivery.commodity = trade.offer.commodity.type;
+        delivery.commodity = trade.offer.commodity.type as any;
+
+        // override trade with value
+        // @ts-ignore
         delivery.grade = trade.offer.commodity.grade.grade;
+        return delivery;
     });
+
 
     const netAmountElevators = drying_fee + discount + checkoff_fee;
     const netAmountGovernment = total_drying_tax + total_checkoff_tax;
@@ -209,5 +215,3 @@ const generateInvoicePDF = async (trade) => {
 
     return rev;
 };
-
-module.exports = generateInvoicePDF;

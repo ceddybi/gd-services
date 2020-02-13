@@ -110,21 +110,6 @@ export declare namespace MyTradeNamespace {
 		status: string;
 	}
 
-	export interface Deliveries {
-		deliveryDate: string;
-		contract?: any;
-		tradingName: string;
-		address: Address;
-		carrier?: any;
-		truckId?: any;
-		ticketId: string;
-		commodity: Commodity;
-		grade: Grade;
-		volume: number;
-		moisture: number;
-		testWeight: number;
-	}
-
 	export interface Offer {
 		id: string;
 		user: User2;
@@ -189,6 +174,12 @@ export declare namespace MyTradeNamespace {
 		volume: number;
 		moisture: number;
 		testWeight: number;
+
+		dryingCost?: number;
+		discount?: number;
+		checkoffCost?: number;
+
+		price?: number;
 	}
 
 	export interface RootObject {
