@@ -1,12 +1,13 @@
 {
     "name": "gd-functions",
     "version": "0.0.1",
-    "description": "Sosho - backend server",
+    "description": "GD micro services on Firebase/GCP",
     "main": "index.js",
     "scripts": {
         "test": "mocha src/**/*test.ts --exit --timeout 30000 --require ts-node/register --full-trace",
         "copy-env": "mkdir -p build && cp ./src/{service.account.json} build/ && yarn copy-engine",
         "copy-engine": "node ./scripts/nodeEngine.js",
+        "copy-images": "mkdir -p build/images && cp src/images/* build/images",
         "clean": "rm -rf build",
         "build:server": "tsc --skipLibCheck",
         "build": "yarn clean && yarn build:server && yarn copy-env",
