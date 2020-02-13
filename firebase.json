@@ -1,11 +1,5 @@
 {
-    "hosting": {
-        "cleanUrls": true,
-        "public": "packages/web/out",
-        "site": "soshohq",
-        "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
-    },
     "functions": {
-        "source": "packages/server/build"
+        "source": "src"
     }
 }

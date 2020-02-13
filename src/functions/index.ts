@@ -1,6 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import isEmpty from 'lodash/isEmpty';
+import { generateContractPDF } from './contract';
+import { generateInvoicePDF } from './invoice';
 
 const app = express();
 app.use(bodyParser.json());

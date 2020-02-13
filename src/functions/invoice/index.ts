@@ -24,7 +24,7 @@ const conversion = (value, commodity, baseUnit,  targetUnit, price) => {
     }
 };
 
-export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Buffer => {
+export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Promise<Buffer> => {
 
     const drying_fee = trade.deliveries.reduce((acc, curr) => acc + curr.dryingCost * curr.volume, 0);
     const discount = trade.deliveries.reduce((acc, curr) => acc + curr.discount * curr.volume, 0);
