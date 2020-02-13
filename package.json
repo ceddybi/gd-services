@@ -4,6 +4,7 @@
     "description": "GD micro services on Firebase/GCP",
     "main": "index.js",
     "scripts": {
+        "dev": "ts-node src/local-server",
         "test": "mocha src/**/*test.ts --exit --timeout 30000 --require ts-node/register --full-trace",
         "copy-env": "mkdir -p build && cp ./src/{service.account.json} build/ && yarn copy-engine",
         "copy-engine": "node ./scripts/nodeEngine.js",
@@ -39,6 +40,7 @@
         "chai": "^4.2.0",
         "mocha": "^6.2.2",
         "nodemon": "^1.18.9",
-        "ts-node": "^8.5.0"
+        "ts-node": "^8.5.0",
+        "typescript": "^3.7.5"
     }
 }
