@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "outDir": "build",
+    "declaration": true,
+    "esModuleInterop": true,
+    "lib": [
+      "es6",
+      "esnext"
+    ],
+    "allowUnusedLabels": true
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}
