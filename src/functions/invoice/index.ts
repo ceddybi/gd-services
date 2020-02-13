@@ -24,7 +24,7 @@ const conversion = (value, commodity, baseUnit,  targetUnit, price) => {
     }
 };
 
-export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject) => {
+export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Buffer => {
 
     const drying_fee = trade.deliveries.reduce((acc, curr) => acc + curr.dryingCost * curr.volume, 0);
     const discount = trade.deliveries.reduce((acc, curr) => acc + curr.discount * curr.volume, 0);
@@ -53,13 +53,13 @@ export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject) => 
     const seller = trade.offer.offerType.id === '46244fa5-84f7-4259-9a48-38c0495d9547' ? trade.user : trade.offer.user;
 
     const doc = new PDFDocument();
-    doc.image('./src/app/resources/images/logo/logo.png', 470, 35, {
+    doc.image('../../images/logo.png', 470, 35, {
         fit: [50, 50],
         align: 'center',
         valign: 'top'
     });
 
-    doc.image('./src/app/resources/images/logo/GanaraskaLogo.jpg', 70, 35, {
+    doc.image('../../images/GanaraskaLogo.jpg', 70, 35, {
         fit: [120, 120],
         align: 'center',
         valign: 'top'
@@ -199,7 +199,7 @@ export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject) => 
 
     doc.end();
 
-    let rev = await new Promise((resolve, reject) => {
+    let rev: Buffer = await new Promise((resolve, reject) => {
         let bufs = [];
 
         doc.on('data', function(d) {

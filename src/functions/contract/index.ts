@@ -10,7 +10,7 @@ const bushels = {
     'canola': 44.0920,
 };
 
-export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject, me) => {
+export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject, me): Promise<Buffer> => {
     const trade = tradeBody.offer;
 
     // use passed volume or offer.volume
@@ -46,7 +46,7 @@ export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject
     const deliveryMethod = trade.deliveryMethod.method === 'Delivery' ? 'Delivery' : 'Pickup';
     const doc = new PDFDocument();
 
-    doc.image('./src/app/resources/images/logo/GanaraskaLogo.jpg', 70, 35, {
+    doc.image('../../images/GanaraskaLogo.jpg', 70, 35, {
         fit: [160, 160],
         align: 'center',
         valign: 'top'
@@ -166,7 +166,7 @@ export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject
 
     doc.end();
 
-    let rev = await new Promise((resolve, reject) => {
+    let rev: Buffer = await new Promise((resolve, reject) => {
         let bufs = [];
 
         doc.on('data', function(d) {
