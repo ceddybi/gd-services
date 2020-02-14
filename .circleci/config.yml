@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8.16.1
+    steps:
+      - checkout
+      
+      - run:
+          name: Install Node modules
+          command: yarn
+
+      - run:
+          name: Build Server app
+          command:  yarn build
+
+      - run: 
+          name: Deploy to Firebase
+          command:  yarn deploy
+
+workflows:
+  version: 2
+  soshoapp-pipeline:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
