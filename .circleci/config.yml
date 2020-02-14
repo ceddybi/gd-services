@@ -6,7 +6,7 @@ jobs:
       - image: circleci/node:8.16.1
     steps:
       - checkout
-      
+
       - run:
           name: Install Node modules
           command: yarn
@@ -21,7 +21,7 @@ jobs:
 
 workflows:
   version: 2
-  soshoapp-pipeline:
+  gd-functions-pipeline:
     jobs:
       - build:
           filters:
