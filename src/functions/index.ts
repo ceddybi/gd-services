@@ -40,7 +40,6 @@ app.post('/', async (req: { body: any; }, res: { json: (arg0: { success: boolean
     const payload = req.body;
 
     console.log('Request', JSON.stringify(payload));
-
     if(isEmpty(payload)){
         return res.json({ success: false });
     }
