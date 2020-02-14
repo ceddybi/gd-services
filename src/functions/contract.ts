@@ -1,3 +1,4 @@
+import express from 'express';
 import PDFDocument from 'pdfkit';
 import moment from 'moment';
 import { MyTradeNamespace } from '../interfaces/MyTrade.interface';
@@ -10,7 +11,7 @@ const bushels = {
     'canola': 44.0920,
 };
 
-export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject): Promise<Buffer> => {
+export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject, res?: express.Response): Promise<Buffer | void> => {
     const trade = tradeBody.offer;
 
     // use passed volume or offer.volume
@@ -166,6 +167,19 @@ export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject
 
     doc.end();
 
+    if(res){
+        // return response to response
+        doc.on('data', function(d) {
+            res.write(d);
+        });
+
+        doc.on('end', function() {
+            res.end();
+        });
+        return;
+    }
+
+    // return promise
     let rev: Buffer = await new Promise((resolve, reject) => {
         let bufs = [];
 
@@ -173,7 +187,7 @@ export const generateContractPDF = async (tradeBody: MyTradeNamespace.RootObject
             bufs.push(d);
         });
 
-        let buffer;
+        let buffer: Buffer | PromiseLike<Buffer>;
         doc.on('end', function() {
             buffer = Buffer.concat(bufs);
             return resolve(buffer);

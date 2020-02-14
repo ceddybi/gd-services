@@ -1,3 +1,4 @@
+import express from 'express';
 import PDFDocument from 'pdfkit';
 import { MyTradeNamespace } from '../interfaces/MyTrade.interface';
 
@@ -24,7 +25,7 @@ const conversion = (value, commodity, baseUnit,  targetUnit, price) => {
     }
 };
 
-export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Promise<Buffer> => {
+export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject, res?: express.Response): Promise<Buffer| void> => {
 
     const drying_fee = trade.deliveries.reduce((acc, curr) => acc + curr.dryingCost * curr.volume, 0);
     const discount = trade.deliveries.reduce((acc, curr) => acc + curr.discount * curr.volume, 0);
@@ -198,6 +199,19 @@ export const generateInvoicePDF = async (trade: MyTradeNamespace.RootObject): Pr
 
 
     doc.end();
+
+
+    if(res){
+        // return response to response
+        doc.on('data', function(d) {
+            res.write(d);
+        });
+
+        doc.on('end', function() {
+            res.end();
+        });
+        return;
+    }
 
     let rev: Buffer = await new Promise((resolve, reject) => {
         let bufs = [];
